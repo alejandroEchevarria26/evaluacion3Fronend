@@ -6,15 +6,15 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "bash scripts/sites-env.sh -- vinext dev",
+    "dev": "vinext dev",
     "dev:windows": "vinext dev",
     "install:ci": "bash scripts/install-ci.sh",
-    "build": "bash scripts/build-verified.sh",
-    "build:windows": "vinext build",
+    "build": "next build",
+    "build:windows": "next build",
     "validate:artifact": "bash scripts/validate-artifact.sh",
-    "start": "bash scripts/sites-env.sh -- vinext start",
-    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate"
+    "start": "next start",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

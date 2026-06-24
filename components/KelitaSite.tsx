@@ -12,6 +12,14 @@ import {
 } from "../data/products";
 
 const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+const withBasePath = (path: string) => {
+  if (!path) return path;
+  if (/^(https?:)?\/\//.test(path) || path.startsWith("data:")) return path;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${basePath}${normalizedPath}`;
+};
 
 const emptyProductForm = {
   name: "",
@@ -57,7 +65,7 @@ function Header({ isAdmin, onToggleView }: { isAdmin: boolean; onToggleView: () 
   return (
     <header className="site-header">
       <a className="brand" href={isAdmin ? "#panel" : "#inicio"} onClick={closeMenu} aria-label="Tortas Kelita, inicio">
-        <img src="/images/logo.jpeg" alt="" />
+        <img src={withBasePath("/images/logo.jpeg")} alt="" />
         <span>
           <strong>Tortas Kelita</strong>
           <small>La tradición de la abuela</small>
@@ -110,7 +118,7 @@ function ProductCard({ product, onOpen, onQuote, onDelete, isAdmin = false }: Pr
   return (
     <article className="product-card">
       <button className="product-image-button" type="button" onClick={() => onOpen(product)}>
-        <img src={product.image} alt={product.name} loading="lazy" />
+        <img src={withBasePath(product.image)} alt={product.name} loading="lazy" />
         <span className="product-category">{product.category}</span>
       </button>
       <div className="product-copy">
@@ -182,7 +190,7 @@ function ProductModal({ product, onClose, onQuote, isAdmin }: ProductModalProps)
         <button className="modal-close" type="button" onClick={onClose} aria-label="Cerrar detalles">
           &times;
         </button>
-        <img className="modal-image" src={product.image} alt={product.name} />
+        <img className="modal-image" src={withBasePath(product.image)} alt={product.name} />
         <div className="modal-copy">
           <span className="eyebrow">{product.category}</span>
           <div className="modal-heading">
@@ -738,7 +746,7 @@ export function KelitaSite() {
                 <p>Elaboramos cada pedido de forma artesanal, con ingredientes frescos y atención en cada detalle, para acompañar tus momentos especiales con el sabor de casa.</p>
               </div>
               <div className="story-grid">
-                <img src="/images/sublogo.png" alt="Tortas Kelita preparando una receta artesanal" loading="lazy" />
+                <img src={withBasePath("/images/sublogo.png")} alt="Tortas Kelita preparando una receta artesanal" loading="lazy" />
                 <div className="values-list">
                   <article><span>01</span><div><h3>Hecho a mano</h3><p>Producción artesanal para cuidar textura, frescura y terminación.</p></div></article>
                   <article><span>02</span><div><h3>A tu medida</h3><p>Adaptamos sabores, colores y formato al momento que quieres celebrar.</p></div></article>
@@ -825,7 +833,7 @@ export function KelitaSite() {
           </main>
 
           <footer className="site-footer">
-            <div className="footer-brand"><img src="/images/logo.jpeg" alt="Logo de Tortas Kelita" /><div><strong>Tortas Kelita</strong><span>La tradición de la abuela</span></div></div>
+            <div className="footer-brand"><img src={withBasePath("/images/logo.jpeg")} alt="Logo de Tortas Kelita" /><div><strong>Tortas Kelita</strong><span>La tradición de la abuela</span></div></div>
             <div className="footer-links"><a href="#catalogo">Catálogo</a><a href="#ubicacion">Ubicación</a><a href="#pedido">Pedidos</a><a href="https://instagram.com/tortaskelita" target="_blank" rel="noreferrer">Instagram</a></div>
             <p>&copy; 2026 Tortas Kelita. Sitio desarrollado por Alejandro Echeverría y Brallan Reyes.</p>
           </footer>
